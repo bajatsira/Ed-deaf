@@ -14,4 +14,10 @@ class Course(models.Model):
 class Student(models.Model):
   name = models.CharField(max_length=255)
   email = models.EmailField()
-  courses = models.ManyToManyField(Course)
+  courses = models.ManyToManyField(Course, through="Enrollment")
+
+class Enrollment(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    date = models.DateField()
+    mark = models.IntegerField()
