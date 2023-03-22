@@ -6,9 +6,10 @@ class User(models.Model):
   email = models.EmailField()
 
 class Course(models.Model):
-    title = models.CharField(max_length=120)
+    title = models.CharField(max_length=255)
     description = models.TextField()
-    body = models.TextField()
+#    body = models.TextField()
+#    longread = models.CharField(max_length=255)
     author = models.ForeignKey('User', related_name='courses', on_delete=models.CASCADE)
 
 class Student(models.Model):
@@ -21,3 +22,10 @@ class Enrollment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     date = models.DateField()
     mark = models.IntegerField()
+
+class Longread(models.Model):					#кажется логичным вынести это в отдельное приложение
+    title = models.CharField(max_length=255)
+    course = models.ForeignKey('Course', related_name='longreads', on_delete=models.CASCADE)
+
+class Task(models.Model):
+    longread = models.ForeignKey('Longread', related_name='tasks', on_delete=models.CASCADE)
