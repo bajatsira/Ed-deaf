@@ -29,3 +29,8 @@ class Longread(models.Model):					#кажется логичным вынест�
 
 class Task(models.Model):
     longread = models.ForeignKey('Longread', related_name='tasks', on_delete=models.CASCADE)
+    condition = models.TextField()
+
+class Solution(models.Model):
+    variant = models.TextField()
+    task = models.ForeignKey('Task', related_name='variant', on_delete=models.CASCADE)
