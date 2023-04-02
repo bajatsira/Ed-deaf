@@ -11,6 +11,8 @@ class Course(models.Model):
 #    body = models.TextField()
 #    longread = models.CharField(max_length=255)
     author = models.ForeignKey('User', related_name='courses', on_delete=models.CASCADE)
+    def __str__(self):
+        return self.title
 
 class Student(models.Model):
   name = models.CharField(max_length=255)
