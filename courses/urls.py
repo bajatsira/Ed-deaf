@@ -4,4 +4,5 @@ from .views import ListCourse
 app_name = "courses"
 urlpatterns = [
 	path('courses/', ListCourse.as_view()),
+	path('courses/<int:pk>', ListCourse.as_view())
 ]
