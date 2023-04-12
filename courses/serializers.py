@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Course
+from .models import Course, Unit
 
 class CourseSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=255)
@@ -17,3 +17,9 @@ class CourseSerializer(serializers.Serializer):
 
         instance.save()
         return instance
+
+class UnitSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=255)
+    body = serializers.CharField()
+    level = serializers.IntegerField()
+    unit_id = serializers.IntegerField()

@@ -23,22 +23,32 @@ class Student(models.Model):                                                    
     courses = models.ManyToManyField(Course, through="Enrollment")
     level = models.IntegerField()
 
+    def __str__(self):
+        return self.title
+
 class Enrollment(models.Model):                                                          # связь между студентами и курсами
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     date = models.DateField()
     mark = models.IntegerField()
 
+
 class Longread(models.Model):                                                            # лонгрид
     title = models.CharField(max_length=255)
     course = models.ForeignKey('Course', related_name='longreads', on_delete=models.CASCADE)
     longread_id = models.IntegerField()
+
+    def __str__(self):
+        return self.title
 
 class Task(models.Model):                                                                # задачи в лонгриде
     longread = models.ForeignKey('Longread', related_name='tasks', on_delete=models.CASCADE)
     condition = models.TextField()
     level = models.IntegerField()
     unit_id = models.IntegerField()
+    trueAnswer = models.TextField()
+
+
 
 class Solution(models.Model):                                                            # варианты решений к задаче
     variant = models.TextField()
@@ -50,3 +60,6 @@ class Unit(models.Model):                                                       
     level = models.IntegerField()
     unit_id = models.IntegerField()
     longread = models.ForeignKey('Longread', related_name='units', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title

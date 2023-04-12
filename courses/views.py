@@ -3,8 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 
-from .models import Course
-from .serializers import CourseSerializer
+from .models import Course, Task, Unit
+from .serializers import CourseSerializer, UnitSerializer
 
 class ListCourse(APIView):
 	def get(self, request):
@@ -33,3 +33,13 @@ class ListCourse(APIView):
 		course = get_object_or_404(Course.objects.all(), pk=pk)
 		course.delete()
 		return Response({"message": "Course with id '{}' deleted successfully".format(pk)}, status=204)
+
+	def CheckAnswer(AnswerStudent):
+		if AnswerStudent==1:
+			return Response({"success": "Okey"})
+
+class ListUnit(APIView):
+	def get(self, request):
+		units = Unit.objects.all()
+		serializer = UnitSerializer(units, many=True)
+		return Response({"units": serializer.data})
