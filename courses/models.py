@@ -24,14 +24,13 @@ class Student(models.Model):                                                    
     level = models.IntegerField()
 
     def __str__(self):
-        return self.title
+        return self.name
 
 class Enrollment(models.Model):                                                          # связь между студентами и курсами
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     date = models.DateField()
     mark = models.IntegerField()
-
 
 class Longread(models.Model):                                                            # лонгрид
     title = models.CharField(max_length=255)
@@ -40,6 +39,12 @@ class Longread(models.Model):                                                   
 
     def __str__(self):
         return self.title
+
+class Levels(models.Model):
+     longread = models.ForeignKey('Longread', related_name='levels', on_delete=models.CASCADE)
+     student = models.ForeignKey('Student', related_name='levels', on_delete=models.CASCADE)
+     level = models.IntegerField()
+     #Student.objects.filter(id=4)
 
 class Task(models.Model):                                                                # задачи в лонгриде
     longread = models.ForeignKey('Longread', related_name='tasks', on_delete=models.CASCADE)

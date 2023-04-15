@@ -3,8 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 
-from .models import Course, Task, Unit
-from .serializers import CourseSerializer, UnitSerializer
+from .models import Course, Task, Unit, Levels, Student
+from .serializers import CourseSerializer, UnitSerializer, TitleSerializer, LevelsSerializer
 
 class ListCourse(APIView):
 	def get(self, request):
@@ -43,3 +43,18 @@ class ListUnit(APIView):
 		units = Unit.objects.all()
 		serializer = UnitSerializer(units, many=True)
 		return Response({"units": serializer.data})
+
+class ListTitle(APIView):
+	def get(self, request):
+		courses = Course.objects.only('title')
+		serializer = TitleSerializer(courses, many=True)
+		return Response({"courses": serializer.data})
+
+class BarChart(APIView):
+	def get(self, request):
+		students = Student.objects.get(id=1)
+		level = Levels.objects.filter(student=students)
+		serializer = LevelsSerializer(level, many=True)
+		return Response({"level": serializer.data})
+		
+
